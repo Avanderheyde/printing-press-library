@@ -22006,9 +22006,9 @@
       "path": "library/travel/seats-aero",
       "release": {
         "cli_name": "seats-aero-pp-cli",
-        "version": "2026.8.1",
-        "released_at": "2026-08-17T07:57:07Z",
-        "source_commit": "40363ac0936c4f406625f8399d8ad9b57673170e"
+        "version": "2026.9.1",
+        "released_at": "2026-09-07T09:13:30Z",
+        "source_commit": "eafbccd10603fb8bbd66cac152e7fe216efca1a5"
       },
       "printer": "cathrynlavery",
       "printer_name": "Cathryn Lavery",
@@ -24172,6 +24172,10 @@
         {
           "handle": "MBemera",
           "name": "Matthew Bright"
+        },
+        {
+          "handle": "seunawoyele",
+          "name": "Seun Awoyele"
         }
       ],
       "mcp": {
@@ -27373,9 +27377,9 @@
       "path": "library/travel/wanderlog",
       "release": {
         "cli_name": "wanderlog-pp-cli",
-        "version": "2026.8.2",
-        "released_at": "2026-08-25T09:27:30Z",
-        "source_commit": "5005e7bbdf918019ce36d2a5d17204a123eebfd4"
+        "version": "2026.9.1",
+        "released_at": "2026-09-07T09:13:30Z",
+        "source_commit": "855996abd7e6de374fe5f4059982dfdfbb91edbc"
       },
       "printer": "zjsng",
       "printer_name": "zjsng",
