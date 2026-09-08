@@ -21603,9 +21603,9 @@
       "path": "library/other/scientific-consensus",
       "release": {
         "cli_name": "scientific-consensus-pp-cli",
-        "version": "2026.8.13",
-        "released_at": "2026-08-30T09:12:06Z",
-        "source_commit": "24744f700c4257a7498dc099a02572ec69e3d637"
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:24:30Z",
+        "source_commit": "2d5f11856e8864c0165d9cf603b6df5788c48dc9"
       },
       "printer": "laci141",
       "printer_name": "laci141",
