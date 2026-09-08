@@ -5400,6 +5400,12 @@
         "handle": "richie305",
         "name": "David Richie"
       },
+      "contributors": [
+        {
+          "handle": "prashantkamani",
+          "name": "Prashant Kamani"
+        }
+      ],
       "mcp": {
         "binary": "costco-pp-mcp",
         "transports": [
@@ -22582,21 +22588,21 @@
       "search_terms": [
         "shelters",
         "shelters-pp-cli",
-        "Credible, real-time disaster shelter information for AI agents and people",
+        "Credible, real-time US (and territories) disaster shelter information, unioning FEMA OpenShelters and the American Red Cross feed, for AI agents and people",
         "Closest open shelter, including pet-friendly",
         "near",
-        "Ranks open shelters by straight-line distance from a lat,lon, ZIP, or street address; geocodes shelters that are missing coordinates and reports any it cannot locate rather than dropping them.",
+        "Ranks open shelters by straight-line distance from a lat,lon, ZIP, or street address; geocodes shelters that are missing coordinates and reports any it cannot locate rather than dropping them; filterable by pets, ADA, wheelchair, county/parish, and confirmed onsite generator.",
         "Honest capacity, never a fabricated denominator",
         "capacity",
         "Computes utilization only where both a population and a capacity are reported, labeling the denominator (evacuation vs post-impact), and surfaces shelters reported FULL without asserting it as ground truth.",
         "One-call situational briefing",
         "brief",
-        "One command returns the open count, a breakdown by state, pet-friendly and accessible counts, and the capacity picture, with an optional human briefing.",
+        "One command returns the open count, breakdowns by state and by the driving incident, pet-friendly and accessible counts, and the capacity picture, with an optional human briefing.",
         "Filtered open-shelter listing",
-        "Open shelters flattened from the feed and filterable by state, pets, ADA, wheelchair, managing org, and status.",
+        "Open shelters from the union of FEMA OpenShelters and the American Red Cross feed (deduped, each tagged with a source field: fema, redcross, or fema+redcross), flattened and filterable by state, pets, ADA, wheelchair, managing org, status, county/parish, and confirmed onsite generator; FEMA rows best-effort enriched with the richer FEMA_NSS/0 layer (county, the driving incident, generator and floodplain/surge attributes).",
         "Flattened shelter detail by stable id",
         "shelter",
-        "Full detail for one shelter joined on the stable shelter_id rather than the churning objectid, with unreported fields as explicit null."
+        "Full detail for one shelter joined on the stable shelter_id rather than the churning objectid, with unreported fields as explicit null; enriched with FEMA_NSS/0 fields (county, the driving incident, open date, generator, floodplain/surge, and the population breakdown) when reported."
       ],
       "path": "library/other/shelters",
       "release": {
@@ -24150,9 +24156,9 @@
       "path": "library/media-and-entertainment/substack",
       "release": {
         "cli_name": "substack-pp-cli",
-        "version": "2026.8.1",
-        "released_at": "2026-08-17T07:57:07Z",
-        "source_commit": "40363ac0936c4f406625f8399d8ad9b57673170e"
+        "version": "2026.9.1",
+        "released_at": "2026-09-07T10:00:27Z",
+        "source_commit": "5701d1eaf8c90f112a451c942eaf7cff3a701b27"
       },
       "printer": "chirantan",
       "printer_name": "Chirantan Rajhans",
