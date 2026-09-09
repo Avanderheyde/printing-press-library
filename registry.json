@@ -10878,6 +10878,67 @@
       ]
     },
     {
+      "name": "google-tag-manager",
+      "category": "marketing",
+      "api": "Google Tag Manager",
+      "description": "Mirror any GTM container into a local database, then audit, diff, and query it from the terminal — everything the GTM console can't do, read-only and safe against production.",
+      "search_terms": [
+        "google-tag-manager",
+        "Google Tag Manager",
+        "google-tag-manager-pp-cli",
+        "Mirror any GTM container into a local database, then audit, diff, and query it from the terminal — everything the GTM console can't do, read-only and safe against production.",
+        "Mirror container to SQLite",
+        "pull",
+        "Walk an entire GTM container — every tag, trigger, variable, folder, template, client, zone, and gtag config — into a local SQLite store in one command.",
+        "Hygiene audit",
+        "audit",
+        "Run a battery of hygiene checks against the mirror: dead tags, orphan triggers, unused variables, paused tags, Custom HTML tags, and tags firing on All Pages.",
+        "Snapshot diff",
+        "diff",
+        "Field-level diff between two snapshots: workspace vs live, version vs version, or container vs container, with stable name+type keys so renames are not add+remove.",
+        "Cross-container fleet matrix",
+        "fleet",
+        "One table across all pulled containers: GA4/measurement-id inventory, Consent Mode coverage, Custom HTML count, and entity counts per container.",
+        "Consent Mode v2 readiness",
+        "consent-report",
+        "Per-tag consentSettings coverage and a list of tags that fire without consent gating, classified by vendor (ads vs analytics).",
+        "Full-text search across config",
+        "search",
+        "Substring search across every entity's name, type, parameters, and notes — find hardcoded GA4 ids, stray pixels, or leftover URLs across all pulled containers.",
+        "Reverse-dependency blast radius",
+        "uses",
+        "Show everything that references a variable or trigger — the safe-to-delete / what-breaks-if-I-touch-this check.",
+        "Runtime fire graph",
+        "fires",
+        "Bidirectional graph walk: which tags fire on a trigger, or which triggers and variables a tag depends on.",
+        "Git-friendly export",
+        "export",
+        "Emit a deterministic flattened representation of the container for clean version-control diffs, or container-export-compatible JSON."
+      ],
+      "path": "library/marketing/google-tag-manager",
+      "printer": "stellato",
+      "printer_name": "Greg Stellato",
+      "creator": {
+        "handle": "stellato",
+        "name": "Greg Stellato"
+      },
+      "mcp": {
+        "binary": "google-tag-manager-pp-mcp",
+        "transports": [
+          "stdio",
+          "http"
+        ],
+        "tool_count": 22,
+        "public_tool_count": 0,
+        "auth_type": "bearer_token",
+        "env_vars": [
+          "GTM_ACCESS_TOKEN"
+        ],
+        "mcp_ready": "full",
+        "spec_format": "openapi3"
+      }
+    },
+    {
       "name": "google-trends",
       "category": "marketing",
       "api": "Google Trends",
