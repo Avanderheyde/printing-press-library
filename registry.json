@@ -4642,9 +4642,9 @@
       "path": "library/health/clinical-trials",
       "release": {
         "cli_name": "clinical-trials-pp-cli",
-        "version": "2026.9.3",
-        "released_at": "2026-09-07T09:12:02Z",
-        "source_commit": "180d417d93b026ff25494c27c077bac30ad447ba"
+        "version": "2026.9.4",
+        "released_at": "2026-09-09T09:08:52Z",
+        "source_commit": "f1228807178270f46fe8c314ef12315b93f4a1a6"
       },
       "printer": "laci141",
       "printer_name": "laci141",
@@ -22415,6 +22415,57 @@
           "SEC_EDGAR_USER_AGENT"
         ],
         "mcp_ready": "full",
+        "spec_format": "internal"
+      }
+    },
+    {
+      "name": "seek",
+      "category": "productivity",
+      "api": "SEEK",
+      "description": "Every SEEK search and job-detail feature, plus a local job history, salary distributions, and hiring trends no other SEEK tool has.",
+      "search_terms": [
+        "seek",
+        "seek-pp-cli",
+        "Every SEEK search and job-detail feature, plus a local job history, salary distributions, and hiring trends no other SEEK tool has.",
+        "Salary distribution over live listings",
+        "salary",
+        "Get salary percentiles, a histogram, and the pay-disclosure rate for a role and location by sampling matching listings (which it also caches locally).",
+        "Hiring-volume trend series",
+        "trends",
+        "See how job-listing volume for a classification, region, or work arrangement changes over time, bucketed from the listing dates of every job the CLI has cached, with period-over-period deltas.",
+        "Company hiring scan",
+        "company",
+        "Profile one advertiser: their company details and review ratings plus every current opening and a local history of how many roles they've posted.",
+        "Live facet breakdown",
+        "listings facets",
+        "Break a live query down by classification, work type, pay band, or region by tallying the sampled result pages — no local store needed.",
+        "Classification taxonomy resolver",
+        "classifications",
+        "Browse or resolve SEEK's numeric classification and subclassification IDs so filtered searches can target them precisely.",
+        "New listings across every saved search",
+        "me new-jobs",
+        "Run every one of your SEEK saved searches and return only the postings that aren't already in your local store, tagged by which search matched."
+      ],
+      "path": "library/productivity/seek",
+      "printer": "polsiola-dot",
+      "printer_name": "Paul Siola",
+      "creator": {
+        "handle": "polsiola-dot",
+        "name": "Paul Siola"
+      },
+      "mcp": {
+        "binary": "seek-pp-mcp",
+        "transports": [
+          "stdio",
+          "http"
+        ],
+        "tool_count": 4,
+        "public_tool_count": 1,
+        "auth_type": "cookie",
+        "env_vars": [
+          "SEEK_COOKIE"
+        ],
+        "mcp_ready": "partial",
         "spec_format": "internal"
       }
     },
