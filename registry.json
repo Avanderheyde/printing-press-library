@@ -3080,6 +3080,12 @@
         "Diff the latest sync against the previous one and surface indexation, crawl, and impression regressions per site."
       ],
       "path": "library/developer-tools/bing-webmaster",
+      "release": {
+        "cli_name": "bing-webmaster-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:27:09Z",
+        "source_commit": "138e959833411ad3f7e9e36eaecae5323f124062"
+      },
       "printer": "Pimmetjeoss",
       "printer_name": "Pimmetjeoss",
       "mcp": {
@@ -4157,6 +4163,12 @@
         "Track the sixteen CDS aggregate metrics forward from your first sync, with archived rows labelled as such."
       ],
       "path": "library/payments/cdc-pakistan",
+      "release": {
+        "cli_name": "cdc-pakistan-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:27:09Z",
+        "source_commit": "6278bfd7bc4eb70febb716a89b8fc2bed65c6f59"
+      },
       "printer": "qazmataz",
       "printer_name": "qazmataz",
       "creator": {
@@ -5499,9 +5511,9 @@
       "path": "library/commerce/costco",
       "release": {
         "cli_name": "costco-pp-cli",
-        "version": "2026.8.3",
-        "released_at": "2026-08-30T09:08:18Z",
-        "source_commit": "d97ee8c93245eee634bbf3f75541341e48fbfc44"
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:26:18Z",
+        "source_commit": "4865f26ebc6aed787295bc183269a40f1817b25c"
       },
       "printer": "richie305",
       "printer_name": "David Richie",
@@ -13632,6 +13644,12 @@
         "Compute descriptive monthly aggregates while excluding unavailable, ambiguous, anomalous, and incomplete rows."
       ],
       "path": "library/marketing/keyword-planner",
+      "release": {
+        "cli_name": "keyword-planner-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:27:09Z",
+        "source_commit": "907c5cb0cc3bdf217dff8b084bbcef4c78db5c7b"
+      },
       "printer": "vieGPT",
       "printer_name": "Max Michel",
       "creator": {
@@ -15731,6 +15749,12 @@
         "Dump the stored panel, allocation or coverage tables as JSONL for piping, a single JSON array for agents, or CSV."
       ],
       "path": "library/payments/mufap",
+      "release": {
+        "cli_name": "mufap-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:27:09Z",
+        "source_commit": "aaa5a61c1c7dd234ee8dbf9d935b19ba2a96a802"
+      },
       "printer": "qazmataz",
       "printer_name": "qazmataz",
       "creator": {
@@ -18273,6 +18297,62 @@
         "env_vars": [],
         "mcp_ready": "full",
         "spec_format": "openapi3"
+      }
+    },
+    {
+      "name": "pbs",
+      "category": "other",
+      "api": "Pakistan Bureau of Statistics",
+      "description": "The only machine-readable Pakistani price panel — every urban centre and essential item the Bureau prices weekly, accrued locally because the Bureau itself does not keep the series.",
+      "search_terms": [
+        "pbs",
+        "Pakistan Bureau of Statistics",
+        "pbs-pp-cli",
+        "The only machine-readable Pakistani price panel — every urban centre and essential item the Bureau prices weekly, accrued locally because the Bureau itself does not keep the series.",
+        "Cross-city price spread",
+        "spread",
+        "See the cheapest and dearest city for any essential item in any week, and how that gap has moved over time.",
+        "Single-item multi-city series",
+        "drift",
+        "Follow one item's price across named cities and weeks, with missing weeks shown as gaps rather than filled.",
+        "Custom re-weighted basket",
+        "basket",
+        "Build your own price index over any subset of items using the weight vector PBS republishes every week.",
+        "Weight-vector drift",
+        "weights",
+        "Read the item weight vector for any release, diff two releases, and check the totals sum to 100.",
+        "Extraction verification",
+        "verify",
+        "Audit parsed cell values against the source's own arithmetic invariants, including the weight totals and min-avg-max ordering.",
+        "Coverage and gap map",
+        "coverage",
+        "Show which releases exist upstream, which the local store holds, and every hole named as a hole.",
+        "Upstream revision detector",
+        "revisions",
+        "Detect releases the Bureau has rewritten, re-pointed, or deleted since you captured them.",
+        "Top movers from levels",
+        "movers",
+        "Rank every item in a release by percent change recomputed from price levels, nationally or per city, with outliers flagged."
+      ],
+      "path": "library/other/pbs",
+      "printer": "qazmataz",
+      "printer_name": "qazmataz",
+      "creator": {
+        "handle": "qazmataz",
+        "name": "qazmataz"
+      },
+      "mcp": {
+        "binary": "pbs-pp-mcp",
+        "transports": [
+          "stdio",
+          "http"
+        ],
+        "tool_count": 2,
+        "public_tool_count": 2,
+        "auth_type": "none",
+        "env_vars": [],
+        "mcp_ready": "full",
+        "spec_format": "internal"
       }
     },
     {
@@ -22834,9 +22914,9 @@
       "path": "library/other/shelters",
       "release": {
         "cli_name": "shelters-pp-cli",
-        "version": "2026.8.2",
-        "released_at": "2026-08-17T08:21:18Z",
-        "source_commit": "bc4b586302c2f3040178080f61960f98fff3529d"
+        "version": "2026.9.1",
+        "released_at": "2026-09-08T09:26:18Z",
+        "source_commit": "6d9eba780667dd28b1dcb133c170239190d6cc0d"
       },
       "printer": "abe238",
       "printer_name": "Abe Diaz (@abe238)",
