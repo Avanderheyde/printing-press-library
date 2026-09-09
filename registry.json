@@ -1360,6 +1360,45 @@
       }
     },
     {
+      "name": "amc-theatres",
+      "category": "media-and-entertainment",
+      "api": "Amc Theatres Showtime",
+      "description": "Browser-captured docs-derived contract for AMC Theatres Showtime API v2.",
+      "search_terms": [
+        "amc-theatres",
+        "Amc Theatres Showtime",
+        "amc-theatres-pp-cli",
+        "Browser-captured docs-derived contract for AMC Theatres Showtime API v2.",
+        "Movie plan",
+        "movie-plan",
+        "Find, filter, and rank AMC showtimes by theatre or current location without purchasing tickets."
+      ],
+      "path": "library/media-and-entertainment/amc-theatres",
+      "printer": "Avanderheyde",
+      "printer_name": "Alderik",
+      "creator": {
+        "handle": "Avanderheyde",
+        "name": "Alderik"
+      },
+      "mcp": {
+        "binary": "amc-theatres-pp-mcp",
+        "transports": [
+          "stdio",
+          "http"
+        ],
+        "tool_count": 5,
+        "public_tool_count": 0,
+        "auth_type": "api_key",
+        "env_vars": [
+          "AMC_THEATRES_VENDOR_KEY",
+          "AMC_THEATRES_AUTH_TOKEN",
+          "AMC_THEATRES_ENV"
+        ],
+        "mcp_ready": "full",
+        "spec_format": "openapi3"
+      }
+    },
+    {
       "name": "american-reindustrialization",
       "category": "other",
       "api": "American Reindustrialization",
@@ -13892,9 +13931,9 @@
       "path": "library/devices/kvmctl",
       "release": {
         "cli_name": "kvmctl-pp-cli",
-        "version": "2026.9.1",
-        "released_at": "2026-09-01T09:16:12Z",
-        "source_commit": "fbc990bd1b830fda6d0a06848f88890a5eedfe9b"
+        "version": "2026.9.2",
+        "released_at": "2026-09-09T09:57:45Z",
+        "source_commit": "a1b42a715207549ca40c7855d94fe4dacffe592a"
       },
       "printer": "keithah",
       "printer_name": "Keith Herrington",
@@ -18335,6 +18374,12 @@
         "Rank every item in a release by percent change recomputed from price levels, nationally or per city, with outliers flagged."
       ],
       "path": "library/other/pbs",
+      "release": {
+        "cli_name": "pbs-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-09T09:09:43Z",
+        "source_commit": "8e47f62bf76cc2d691ea6499869e277cd9e210bf"
+      },
       "printer": "qazmataz",
       "printer_name": "qazmataz",
       "creator": {
@@ -22447,6 +22492,12 @@
         "Run every one of your SEEK saved searches and return only the postings that aren't already in your local store, tagged by which search matched."
       ],
       "path": "library/productivity/seek",
+      "release": {
+        "cli_name": "seek-pp-cli",
+        "version": "2026.9.1",
+        "released_at": "2026-09-09T09:09:43Z",
+        "source_commit": "994ec74cae28b698aa847f048ad46e026e667ef0"
+      },
       "printer": "polsiola-dot",
       "printer_name": "Paul Siola",
       "creator": {
@@ -23957,9 +24008,9 @@
       "path": "library/media-and-entertainment/spotify",
       "release": {
         "cli_name": "spotify-pp-cli",
-        "version": "2026.8.3",
-        "released_at": "2026-08-17T07:57:07Z",
-        "source_commit": "40363ac0936c4f406625f8399d8ad9b57673170e"
+        "version": "2026.9.1",
+        "released_at": "2026-09-09T09:09:43Z",
+        "source_commit": "06b95112898f27289889281b7746d700844a8f64"
       },
       "printer": "rob-coco",
       "printer_name": "Rob Zehner",
