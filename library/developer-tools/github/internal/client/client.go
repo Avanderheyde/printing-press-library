@@ -626,7 +626,7 @@ func (c *Client) doInternal(ctx context.Context, method, path string, params map
 		// Server error - retry with backoff only for idempotent methods.
 		// POST/PATCH may have already applied the mutation; replaying the
 		// body can duplicate comments, reviews, or releases.
-		if resp.StatusCode >= 500 && attempt < maxRetries && retryOnServerError(method) {
+		if resp.StatusCode >= 500 && attempt < maxRetries && retryOnServerError(method) && canRetryAmbiguousFailure {
 			wait := time.Duration(math.Pow(2, float64(attempt))) * time.Second
 			fmt.Fprintf(os.Stderr, "server error %d, retrying in %s (attempt %d/%d)\n", resp.StatusCode, wait, attempt+1, maxRetries)
 			if err := sleepContext(ctx, wait); err != nil {

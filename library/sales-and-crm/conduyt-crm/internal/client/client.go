@@ -291,7 +291,7 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		}
 
 		// Server error - retry with backoff (idempotent methods only)
-		if resp.StatusCode >= 500 && attempt < maxRetries && method != "POST" && method != "PATCH" {
+		if resp.StatusCode >= 500 && attempt < maxRetries && method != "POST" && method != "PATCH" && canRetryAmbiguousFailure {
 			wait := time.Duration(math.Pow(2, float64(attempt))) * time.Second
 			fmt.Fprintf(os.Stderr, "server error %d, retrying in %s (attempt %d/%d)\n", resp.StatusCode, wait, attempt+1, maxRetries)
 			time.Sleep(wait)

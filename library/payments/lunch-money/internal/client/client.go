@@ -417,7 +417,7 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		// and a retry would create a duplicate. createRetagTag POSTs /tags;
 		// without this guard a transient 5xx after a successful commit
 		// would leave a duplicate tag in Lunch Money. PATCH(retry-non-idempotent).
-		if resp.StatusCode >= 500 && attempt < maxRetries && isIdempotentMethod(method) {
+		if resp.StatusCode >= 500 && attempt < maxRetries && isIdempotentMethod(method) && canRetryAmbiguousFailure {
 			wait := time.Duration(math.Pow(2, float64(attempt))) * time.Second
 			fmt.Fprintf(os.Stderr, "server error %d, retrying in %s (attempt %d/%d)\n", resp.StatusCode, wait, attempt+1, maxRetries)
 			time.Sleep(wait)

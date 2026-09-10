@@ -67,6 +67,7 @@ func main() {
 		switch {
 		case strings.HasSuffix(path, "/internal/client/client.go"):
 			updated = retrofitRetry(updated, clusters[0], path)
+			validateAmbiguousRetryPolicies(updated, path)
 		case strings.HasSuffix(path, "/internal/cli/helpers.go"):
 			updated = retrofitPathEncoding(updated, clusters[1], path)
 		case strings.Contains(path, "/internal/cli/"):
@@ -116,8 +117,19 @@ func main() {
 }
 
 func retrofitRetry(data []byte, c *cluster, path string) []byte {
-	if bytes.Contains(data, []byte("canRetryAmbiguousFailure")) {
-		return data
+	data = retrofitPlatformRetryPolicy(data, c, path)
+	if strings.HasSuffix(path, "/marketing/dataforseo/internal/client/client.go") {
+		original := data
+		old := []byte("return req.Header.Get(\"Idempotency-Key\") != \"\"")
+		if bytes.Contains(data, old) {
+			data = bytes.Replace(data, old, []byte("// A supplied header alone does not establish provider-side deduplication.\n\treturn false"), 1)
+			c.files[path] = true
+		}
+		data = bytes.Replace(data, []byte("// PATCH: Mutations retry rate limits only when an idempotency key makes replay explicit."), []byte("// PATCH: Preserve the existing keyed-write recovery budget for explicit rate-limit rejection."), 1)
+		data = bytes.Replace(data, []byte("if attempt < maxRetries && requestCanRetry(req) {"), []byte("if attempt < maxRetries && (requestCanRetry(req) || req.Header.Get(\"Idempotency-Key\") != \"\") {"), 1)
+		if !bytes.Equal(original, data) {
+			c.files[path] = true
+		}
 	}
 	fset := token.NewFileSet()
 	file, err := parser.ParseFile(fset, path, data, 0)
@@ -163,14 +175,19 @@ func retrofitRetry(data []byte, c *cluster, path string) []byte {
 			continue
 		}
 		var local []edit
+		approvedGuard := reviewedRetryGuard(path, fn.Name.Name, data)
 		ast.Inspect(fn.Body, func(n ast.Node) bool {
 			branch, ok := n.(*ast.IfStmt)
 			if !ok {
 				return true
 			}
-			if source(branch.Cond) == "resp.StatusCode >= 500 && attempt < maxRetries" {
+			if hasRetryNode(branch.Cond, "resp.StatusCode >= 500", source) && hasRetryNode(branch.Cond, "attempt < maxRetries", source) && !hasRetryConjunct(branch.Cond, "canRetryAmbiguousFailure", source) && (approvedGuard == "" || !hasRetryConjunct(branch.Cond, approvedGuard, source)) {
 				pos := fset.Position(branch.Cond.End()).Offset
-				local = append(local, edit{pos, pos, " && canRetryAmbiguousFailure"})
+				if hasRetryConjunct(branch.Cond, "resp.StatusCode >= 500", source) && hasRetryConjunct(branch.Cond, "attempt < maxRetries", source) {
+					local = append(local, edit{pos, pos, " && canRetryAmbiguousFailure"})
+				} else {
+					local = append(local, edit{fset.Position(branch.Cond.Pos()).Offset, pos, "(" + source(branch.Cond) + ") && canRetryAmbiguousFailure"})
+				}
 			}
 			return true
 		})
@@ -192,8 +209,7 @@ func retrofitRetry(data []byte, c *cluster, path string) []byte {
 				if !ok || source(branch.Cond) != "err != nil" {
 					continue
 				}
-				body := source(branch.Body)
-				if strings.Contains(body, "requestCanRetry(") || strings.Contains(body, "if canRetry") || strings.Contains(body, "!canRetry") {
+				if transportStopsUnsafeWrite(branch.Body, approvedGuard, source) {
 					continue
 				}
 				for _, stmt := range branch.Body.List {
@@ -215,8 +231,10 @@ func retrofitRetry(data []byte, c *cluster, path string) []byte {
 		if strings.Contains(source(fn.Type), "readOnlyIntent bool") {
 			prefix = "readOnlyIntent || "
 		}
-		pos := fset.Position(fn.Body.Lbrace).Offset + 1
-		local = append(local, edit{pos, pos, "\n\t// Keep authentication and rate-limit recovery available; only ambiguous\n\t// transport/server failures must not replay an unprotected write.\n\tcanRetryAmbiguousFailure := " + prefix + "method == http.MethodGet || method == http.MethodHead || method == http.MethodOptions\n"})
+		if !strings.Contains(source(fn.Body), "canRetryAmbiguousFailure :=") {
+			pos := fset.Position(fn.Body.Lbrace).Offset + 1
+			local = append(local, edit{pos, pos, "\n\t// Keep authentication and rate-limit recovery available; only ambiguous\n\t// transport/server failures must not replay an unprotected write.\n\tcanRetryAmbiguousFailure := " + prefix + "method == http.MethodGet || method == http.MethodHead || method == http.MethodOptions\n"})
+		}
 		edits = append(edits, local...)
 	}
 	if len(edits) == 0 {

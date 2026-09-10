@@ -49,12 +49,42 @@ func (c *Client) do(method string) ([]byte, int, error) {
 }
 `
 
-func TestRetryRetrofitLeavesBespokeSafePolicyAlone(t *testing.T) {
+func TestRetryRetrofitDoesNotTrustAnUnreviewedHelperName(t *testing.T) {
 	in := bytes.Replace([]byte(retryFixture), []byte("lastErr = err"), []byte("lastErr = err\nif !requestCanRetry(method, false) { return nil, 0, lastErr }"), 1)
 	in = bytes.Replace(in, []byte("resp.StatusCode >= 500 && attempt < maxRetries"), []byte("resp.StatusCode >= 500 && attempt < maxRetries && requestCanRetry(method, false)"), 1)
 	got := retrofitRetry(in, &cluster{files: map[string]bool{}}, "client.go")
-	if !bytes.Equal(got, in) {
-		t.Fatalf("rewrote already-safe client:\n%s", got)
+	if !bytes.Contains(got, []byte("&& canRetryAmbiguousFailure")) || !bytes.Contains(got, []byte("if !canRetryAmbiguousFailure {")) {
+		t.Fatalf("unreviewed helper bypassed conservative guards:\n%s", got)
+	}
+}
+
+func TestRetryRetrofitRepairsPartiallyGuardedCustomPredicates(t *testing.T) {
+	for _, predicate := range []string{"!nonIdempotent", "method != \"POST\" && method != \"PATCH\"", "retryOnServerError(method)", "isIdempotentMethod(method)"} {
+		t.Run(predicate, func(t *testing.T) {
+			in := bytes.Replace([]byte(retryFixture), []byte("const maxRetries = 3"), []byte("canRetryAmbiguousFailure := method == http.MethodGet\nconst maxRetries = 3"), 1)
+			in = bytes.Replace(in, []byte("lastErr = err"), []byte("lastErr = err\nif !canRetryAmbiguousFailure { return nil, 0, lastErr }"), 1)
+			in = bytes.Replace(in, []byte("resp.StatusCode >= 500 && attempt < maxRetries"), []byte("resp.StatusCode >= 500 && attempt < maxRetries && "+predicate), 1)
+			got := retrofitRetry(in, &cluster{files: map[string]bool{}}, "client.go")
+			if !bytes.Contains(got, []byte(predicate+" && canRetryAmbiguousFailure")) {
+				t.Fatalf("missed partial 5xx policy:\n%s", got)
+			}
+			if bytes.Count(got, []byte("canRetryAmbiguousFailure :=")) != 1 {
+				t.Fatal("duplicated local guard")
+			}
+			if again := retrofitRetry(got, &cluster{files: map[string]bool{}}, "client.go"); !bytes.Equal(again, got) {
+				t.Fatal("not idempotent")
+			}
+		})
+	}
+}
+
+func TestRetryRetrofitDoesNotSkipAnotherFunctionInGuardedFile(t *testing.T) {
+	first := retrofitRetry([]byte(retryFixture), &cluster{files: map[string]bool{}}, "client.go")
+	second := bytes.Replace([]byte(retryFixture), []byte("package client\n"), nil, 1)
+	second = bytes.Replace(second, []byte("do(method"), []byte("doOther(method"), 1)
+	got := retrofitRetry(append(first, second...), &cluster{files: map[string]bool{}}, "client.go")
+	if bytes.Count(got, []byte("canRetryAmbiguousFailure :=")) != 2 {
+		t.Fatal("file-wide marker hid second unsafe function")
 	}
 }
 

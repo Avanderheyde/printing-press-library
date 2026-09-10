@@ -330,7 +330,7 @@ func (c *Client) do(method, path string, params map[string]string, body any, hea
 		// endpoint: postmicmeshorder returns 500 even when the order succeeded,
 		// so retrying it risks placing (and charging) duplicate orders.
 		nonIdempotent := strings.Contains(path, "postmicmeshorder")
-		if resp.StatusCode >= 500 && attempt < maxRetries && !nonIdempotent {
+		if resp.StatusCode >= 500 && attempt < maxRetries && !nonIdempotent && canRetryAmbiguousFailure {
 			wait := time.Duration(math.Pow(2, float64(attempt))) * time.Second
 			fmt.Fprintf(os.Stderr, "server error %d, retrying in %s (attempt %d/%d)\n", resp.StatusCode, wait, attempt+1, maxRetries)
 			time.Sleep(wait)
